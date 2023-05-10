@@ -1,13 +1,12 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import { Button, ButtonGroup } from '@chakra-ui/react'
+import { useEffect, useState } from 'react'
+import ToggleTheme from './components/ToggleTheme'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <div>
-        <Button colorScheme='blue'>Button</Button>
+         <ToggleTheme />
     </div>
   )
 }
