@@ -13,10 +13,13 @@ function App() {
 
   return (
     <div>
+      {/* Header */}
       <header className="flex items-center gap-2 py-3 px-4">
+        {/* Logo */}
         <div>
           <img className="w-[60px] aspect-square" src={logo} alt="" />
         </div>
+        {/* Search  */}
         <div className="flex-1">
           <form>
             <label htmlFor="simple-search" className="sr-only">
@@ -48,11 +51,14 @@ function App() {
             </div>
           </form>
         </div>
+        {/* Toggle Mode  */}
         <ToggleTheme />
       </header>
       <main className="px-4 flex items-baseline">
+        {/* Side bar  */}
         <div className="w-[250px] space-y-3 hidden lg:block">
           <h2 className="text-2xl font-bold dark:text-white">Genres</h2>
+          {/* Genres List  */}
           <ul className="space-y-3">
             <li className="flex items-center gap-2 font-thin text-neutral-500 dark:text-neutral-200">
               <img
@@ -64,9 +70,11 @@ function App() {
             </li>
           </ul>
         </div>
+        {/* Main List  */}
         <div className="flex-1">
           <h1 className="font-bold text-5xl dark:text-white">Games</h1>
           <div className="h-[20px]"></div>
+          {/* Filters Header */}
           <div className="relative flex gap-5">
             <div className="flex gap-4">
               <Menu as="div" className="relative inline-block text-left">
@@ -204,6 +212,7 @@ function App() {
             </div>
           </div>
           <div className="h-[20px]"></div>
+          {/* Game List */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             <div className="bg-white border border-gray-200 rounded-lg shadow dark:bg-neutral-800 dark:border-neutral-700">
               <img className="rounded-t-lg w-full" src={gameIcon} alt="" />
