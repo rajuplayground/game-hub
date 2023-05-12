@@ -2,13 +2,24 @@ import { Fragment, useEffect, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { BsChevronDown } from "react-icons/bs";
 import { Platform, PlatformService } from "../service";
+import _ from "lodash";
 
 interface Props {
   selectPlatform: (id: number) => void;
+  selectOrder: (order: string) => void;
 }
 
-const MainFilters = ({ selectPlatform }: Props) => {
+const MainFilters = ({ selectPlatform, selectOrder }: Props) => {
   const [platforms, setPlatforms] = useState<Platform[]>([]);
+  const orderby: string[] = [
+    "name",
+    "released",
+    "added",
+    "created",
+    "updated",
+    "rating",
+    "metacritic",
+  ];
 
   useEffect(() => {
     PlatformService.getAll().then((response) => {
@@ -83,48 +94,26 @@ const MainFilters = ({ selectPlatform }: Props) => {
           >
             <Menu.Items className="absolute w-56 left-0 mt-2 origin-top-right divide-y divide-gray-100 rounded-md bg-white dark:bg-neutral-900 shadow-lg dark:border dark:border-neutral-600 ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div className="px-1 py-1 ">
-                <Menu.Item>
-                  {({ active }) => (
-                    <button
-                      className={`${
-                        active
-                          ? "bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-400"
-                          : "text-neutral-900 dark:text-neutral-300"
-                      } w-full text-left rounded-md px-2 py-2 text-md`}
-                      onClick={() => {
-                        setPlatform("PC");
-                      }}
-                    >
-                      PC
-                    </button>
-                  )}
-                </Menu.Item>
-                <Menu.Item>
-                  {({ active }) => (
-                    <button
-                      className={`${
-                        active
-                          ? "bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-400"
-                          : "text-neutral-900 dark:text-neutral-300"
-                      } w-full text-left rounded-md px-2 py-2 text-md`}
-                    >
-                      Commodore / Amigo
-                    </button>
-                  )}
-                </Menu.Item>
-                <Menu.Item>
-                  {({ active }) => (
-                    <button
-                      className={`${
-                        active
-                          ? "bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-400"
-                          : "text-neutral-900 dark:text-neutral-300"
-                      } w-full text-left rounded-md px-2 py-2 text-md`}
-                    >
-                      Playstation
-                    </button>
-                  )}
-                </Menu.Item>
+                {orderby.map((order) => {
+                  return (
+                    <Menu.Item key={order}>
+                      {({ active }) => (
+                        <button
+                          className={`${
+                            active
+                              ? "bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-400"
+                              : "text-neutral-900 dark:text-neutral-300"
+                          } w-full text-left rounded-md px-2 py-2 text-md`}
+                          onClick={() => {
+                            selectOrder(order);
+                          }}
+                        >
+                          {_.capitalize(order)}
+                        </button>
+                      )}
+                    </Menu.Item>
+                  );
+                })}
               </div>
             </Menu.Items>
           </Transition>

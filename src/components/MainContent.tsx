@@ -21,7 +21,7 @@ const MainContent = ({ genre = 0 }: Props) => {
       paramsStr += `&genres=${genre}`;
     }
     if (platform != 0) {
-      paramsStr += `&platforms=${platform}`;
+      paramsStr += `&parent_platforms=${platform}`;
     }
     if (orderBy != "") {
       paramsStr += `&ordering=${orderBy}`;
@@ -30,17 +30,21 @@ const MainContent = ({ genre = 0 }: Props) => {
       setGames(response.data.results);
       setLoading(false);
     });
-  }, [genre, platform]);
+  }, [genre, platform, orderBy]);
 
   const selectPlatform = (id: number) => {
     setPlatform(id);
+  };
+
+  const selectOrder = (order: string) => {
+    setOrderBy(order);
   };
 
   return (
     <div className="flex-1">
       <h1 className="font-bold text-5xl dark:text-white">Games</h1>
       <div className="h-[20px]"></div>
-      <MainFilters selectPlatform={selectPlatform} />
+      <MainFilters selectPlatform={selectPlatform} selectOrder={selectOrder} />
       <div className="h-[20px]"></div>
       <div>
         {isLoading && (
