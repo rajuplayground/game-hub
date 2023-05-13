@@ -6,9 +6,10 @@ import GamesGrid from "./GamesGrid";
 
 interface Props {
   genre: number | null;
+  search: string;
 }
 
-const MainContent = ({ genre = 0 }: Props) => {
+const MainContent = ({ genre = 0, search = "" }: Props) => {
   const [games, setGames] = useState<Game[]>([]);
   const [isLoading, setLoading] = useState(false);
   const [platform, setPlatform] = useState(0);
@@ -26,11 +27,18 @@ const MainContent = ({ genre = 0 }: Props) => {
     if (orderBy != "") {
       paramsStr += `&ordering=${orderBy}`;
     }
-    GameService.getAll(paramsStr).then((response) => {
-      setGames(response.data.results);
-      setLoading(false);
-    });
-  }, [genre, platform, orderBy]);
+    if (search != "") {
+      paramsStr += `&search=${search}`;
+    }
+    GameService.getAll(paramsStr)
+      .then((response) => {
+        setGames(response.data.results);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [genre, platform, orderBy, search]);
 
   const selectPlatform = (id: number) => {
     setPlatform(id);

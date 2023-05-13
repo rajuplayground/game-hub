@@ -1,7 +1,19 @@
+import { useState } from "react";
 import logo from "../assets/logo.webp";
 import ToggleTheme from "./ToggleTheme";
 
-const MainHeader = () => {
+interface Props {
+  selectSearch: (query: string) => void;
+}
+
+const MainHeader = ({ selectSearch }: Props) => {
+  const [query, setQuery] = useState("");
+
+  const handleQuery = (e) => {
+    e.preventDefault();
+    selectSearch(query);
+  };
+
   return (
     <header className="flex items-center gap-2 py-3 px-4">
       {/* Logo */}
@@ -10,7 +22,7 @@ const MainHeader = () => {
       </div>
       {/* Search  */}
       <div className="flex-1">
-        <form>
+        <form onSubmit={handleQuery}>
           <label htmlFor="simple-search" className="sr-only">
             Search
           </label>
@@ -36,6 +48,9 @@ const MainHeader = () => {
               className="block w-full p-2 pl-10 text-md text-neutral-800 rounded-full bg-neutral-200 placeholder-neutral-400 dark:placeholder-neutral-700 hover:bg-neutral-300 dark:hover:bg-neutral-800  transition focus:bg-white focus:ring-primary-500 focus:border-primary-500 dark:bg-neutral-900 dark:border-gray-600 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
               placeholder="Search games..."
               required=""
+              onChange={(e) => {
+                setQuery(e.target.value);
+              }}
             />
           </div>
         </form>

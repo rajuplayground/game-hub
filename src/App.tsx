@@ -5,17 +5,23 @@ import { MainContent } from "./components";
 
 function App() {
   const [genre, setGenre] = useState(0);
+  const [search, setSearch] = useState("");
 
   const selectGenre = (id: number) => {
     setGenre(id);
   };
 
+  const selectSearch = (query: string) => {
+    console.log(query);
+    setSearch(query);
+  };
+
   return (
     <div>
-      <MainHeader />
+      <MainHeader selectSearch={selectSearch} />
       <main className="px-4 flex items-baseline">
         <MainSidebar selectGenre={selectGenre} />
-        <MainContent genre={genre} />
+        <MainContent genre={genre} search={search} />
       </main>
     </div>
   );
