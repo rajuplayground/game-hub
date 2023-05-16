@@ -40,6 +40,8 @@ const MainContent = ({ genre = 0, search = "" }: Props) => {
       });
   }, [genre, platform, orderBy, search]);
 
+  console.log(games);
+
   const selectPlatform = (id: number) => {
     setPlatform(id);
   };

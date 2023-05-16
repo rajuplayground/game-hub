@@ -11,6 +11,9 @@ interface Props {
 
 const MainFilters = ({ selectPlatform, selectOrder }: Props) => {
   const [platforms, setPlatforms] = useState<Platform[]>([]);
+  const [platformActive, setPlatformActive] = useState("");
+  const [order, setOrder] = useState("");
+
   const orderby: string[] = [
     "name",
     "released",
@@ -26,14 +29,14 @@ const MainFilters = ({ selectPlatform, selectOrder }: Props) => {
       setPlatforms(response.data.results);
     });
   }, []);
-
+  console.log(platformActive);
   return (
     <div className="relative flex gap-5">
       <div className="flex gap-4">
         <Menu as="div" className="relative inline-block text-left">
           <div>
             <Menu.Button className="flex items-center rounded-md bg-neutral-200 dark:bg-neutral-800 px-4 py-2 text-md fon t-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-300 dark:hover:bg-neutral-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-              Platforms
+              {platformActive != "" ? platformActive : "Platforms"}
               <BsChevronDown
                 className="ml-2 -mr-1 h-5 w-5 text-neutral-800 dark:text-neutral-300"
                 aria-hidden="true"
@@ -61,7 +64,10 @@ const MainFilters = ({ selectPlatform, selectOrder }: Props) => {
                               ? "bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-400"
                               : "text-neutral-900 dark:text-neutral-300"
                           } w-full text-left rounded-md px-2 py-2 text-md`}
-                          onClick={() => selectPlatform(platform.id)}
+                          onClick={() => {
+                            setPlatformActive(platform.name);
+                            selectPlatform(platform.id);
+                          }}
                         >
                           {platform.name}
                         </button>
@@ -76,7 +82,7 @@ const MainFilters = ({ selectPlatform, selectOrder }: Props) => {
         <Menu as="div" className="relative inline-block text-left">
           <div>
             <Menu.Button className="flex items-center rounded-md bg-neutral-200 dark:bg-neutral-800 px-4 py-2 text-md fon t-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-300 dark:hover:bg-neutral-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-              Order by: Relevance
+              Order by: {order === "" ? "Relevance" : order}
               <BsChevronDown
                 className="ml-2 -mr-1 h-5 w-5 text-neutral-800 dark:text-neutral-300"
                 aria-hidden="true"
@@ -105,6 +111,7 @@ const MainFilters = ({ selectPlatform, selectOrder }: Props) => {
                               : "text-neutral-900 dark:text-neutral-300"
                           } w-full text-left rounded-md px-2 py-2 text-md`}
                           onClick={() => {
+                            setOrder(order);
                             selectOrder(order);
                           }}
                         >

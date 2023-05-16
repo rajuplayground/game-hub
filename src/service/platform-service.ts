@@ -3,6 +3,7 @@ import createService from "./http-service";
 export interface Platform {
   id: number;
   name: string;
+  slug: string;
 }
 
 export interface PlatformResponse {

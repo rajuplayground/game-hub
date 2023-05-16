@@ -1,10 +1,16 @@
 import createService from "./http-service";
+import { Platform } from "./platform-service";
+
+interface ParentPlatform {
+  platform: Platform;
+}
 
 export interface Game {
   id: number;
   name: string;
   background_image: string;
   metacritic: number;
+  parent_platforms: ParentPlatform[];
 }
 
 export interface GameResponse {
