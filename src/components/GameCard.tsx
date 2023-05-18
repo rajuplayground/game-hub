@@ -1,6 +1,6 @@
 import bullsEye from "../assets/bulls-eye.webp";
 import { Game } from "../hooks/useGames";
-
+import PlatformIconList from "./PlatformIconList";
 interface Props {
   game: Game;
 }
@@ -14,7 +14,9 @@ const GameCard = ({ game }: Props) => {
       <img className="rounded-t-lg w-full" src={game.background_image} alt="" />
       <div className="p-5">
         <div className="flex justify-between mb-2 items-center">
-          <div className="flex gap-2">platforms</div>
+          <PlatformIconList
+            platforms={game.parent_platforms.map((p) => p.platform)}
+          />
           <p className="font-semibold text-sm dark:text-green-300 bg-green-200 px-2 rounded-md dark:bg-green-800 dark:bg-opacity-40">
             {game.metacritic}
           </p>
