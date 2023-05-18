@@ -14,8 +14,13 @@ function App() {
       <MainHeader selectSearch={selectSearch} />
       <main className="px-4 flex items-baseline">
         <div className="w-[250px] space-y-3 hidden lg:block">aside</div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          <GameGrid />
+        <div className="flex-1">
+          <h1 className="font-bold text-5xl dark:text-white">Games</h1>
+          <div className="h-[20px]"></div>
+          <div className="h-[20px]"></div>
+          <div>
+            <GameGrid />
+          </div>
         </div>
       </main>
     </div>
