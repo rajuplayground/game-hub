@@ -11,5 +11,5 @@ export interface PlatformResponse {
 }
 
 export default createService<Platform, PlatformResponse>(
-  "platforms/lists/parents"
+  "/platforms/lists/parents"
 );

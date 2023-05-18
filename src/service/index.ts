@@ -6,3 +6,5 @@ export type { Game, GameResponse } from "./games-service";
 
 export { default as PlatformService } from "./platform-service";
 export type { Platform, PlatformResponse } from "./platform-service";
+
+export { default as apiClient } from "./http-client";

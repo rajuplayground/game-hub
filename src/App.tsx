@@ -1,18 +1,11 @@
 import { useState } from "react";
-import { MainHeader } from "./components";
-import { MainSidebar } from "./components";
-import { MainContent } from "./components";
+import { GameGrid, MainHeader } from "./components";
 
 function App() {
-  const [genre, setGenre] = useState(0);
-  const [search, setSearch] = useState("");
-
-  const selectGenre = (id: number) => {
-    setGenre(id);
-  };
+  const [genre, setGenre] = useState<number>();
+  const [search, setSearch] = useState<string>();
 
   const selectSearch = (query: string) => {
-    console.log(query);
     setSearch(query);
   };
 
@@ -20,8 +13,10 @@ function App() {
     <div>
       <MainHeader selectSearch={selectSearch} />
       <main className="px-4 flex items-baseline">
-        <MainSidebar selectGenre={selectGenre} />
-        <MainContent genre={genre} search={search} />
+        <div className="w-[250px] space-y-3 hidden lg:block">aside</div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <GameGrid />
+        </div>
       </main>
     </div>
   );

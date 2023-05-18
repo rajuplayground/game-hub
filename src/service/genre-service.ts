@@ -10,4 +10,4 @@ export interface GenreResponse {
   results: Genre[];
 }
 
-export default createService<Genre, GenreResponse>("genres");
+export default createService<Genre, GenreResponse>("/genres");
