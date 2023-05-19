@@ -2,6 +2,7 @@ import bullsEye from "../assets/bulls-eye.webp";
 import { Game } from "../hooks/useGames";
 import PlatformIconList from "./PlatformIconList";
 import GameCritic from "./GameCritic";
+import getCroppedImageUrl from "../service/image-url";
 
 interface Props {
   game: Game;
@@ -13,7 +14,11 @@ const GameCard = ({ game }: Props) => {
       key={game.id}
       className="bg-white border border-gray-200 rounded-lg shadow dark:bg-neutral-800 dark:border-neutral-700"
     >
-      <img className="rounded-t-lg w-full" src={game.background_image} alt="" />
+      <img
+        className="rounded-t-lg w-full"
+        src={getCroppedImageUrl(game.background_image)}
+        alt=""
+      />
       <div className="p-5">
         <div className="flex justify-between mb-2 items-center">
           <PlatformIconList
