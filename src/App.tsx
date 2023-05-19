@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { GameGrid, MainHeader } from "./components";
+import { GameGrid, MainHeader, GenreList } from "./components";
 
 function App() {
   const [genre, setGenre] = useState<number>();
@@ -13,7 +13,9 @@ function App() {
     <div>
       <MainHeader selectSearch={selectSearch} />
       <main className="px-4 flex items-baseline">
-        <div className="w-[250px] space-y-3 hidden lg:block">aside</div>
+        <div className="w-[250px] hidden lg:block">
+          <GenreList />
+        </div>
         <div className="flex-1">
           <h1 className="font-bold text-5xl dark:text-white">Games</h1>
           <div className="h-[20px]"></div>
