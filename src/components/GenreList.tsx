@@ -1,9 +1,11 @@
 import React from "react";
 import useGenres from "../hooks/useGenres";
-
+import { FaSpinner } from "react-icons/fa";
 const GenreList = () => {
   const { data: genres, error, isLoading } = useGenres();
 
+  if (error) return <p>{error}</p>;
+  if (isLoading) return <FaSpinner className="animate-spin" />;
   return (
     <div className="space-y-3">
       <h2 className="text-2xl font-bold dark:text-white">Genres</h2>
