@@ -1,6 +1,8 @@
 import bullsEye from "../assets/bulls-eye.webp";
 import { Game } from "../hooks/useGames";
 import PlatformIconList from "./PlatformIconList";
+import GameCritic from "./GameCritic";
+
 interface Props {
   game: Game;
 }
@@ -17,9 +19,7 @@ const GameCard = ({ game }: Props) => {
           <PlatformIconList
             platforms={game.parent_platforms.map((p) => p.platform)}
           />
-          <p className="font-semibold text-sm dark:text-green-300 bg-green-200 px-2 rounded-md dark:bg-green-800 dark:bg-opacity-40">
-            {game.metacritic}
-          </p>
+          <GameCritic game={game} />
         </div>
         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
           {game.name}
