@@ -2,11 +2,16 @@ import useGames from "../hooks/useGames";
 import GameCard from "./GameCard";
 import SkeletonCard from "./GameSkeleton";
 import GameCardContainer from "./GameCardContainer";
+import { GameQuery } from "../hooks/useGames";
 
-const GameGrid = () => {
-  const { data: games, error, isLoading } = useGames();
+interface Props {
+  gameQuery: GameQuery;
+}
+
+const GameGrid = ({ gameQuery }: Props) => {
+  const { data: games, error, isLoading } = useGames(gameQuery);
   const skeletons = [1, 2, 3, 4, 5, 6];
-  console.log(isLoading);
+
   return (
     <GameCardContainer>
       {error && <p>{error}</p>}

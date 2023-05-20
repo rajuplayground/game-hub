@@ -1,8 +1,20 @@
-import React from "react";
-import useGenres from "../hooks/useGenres";
+import React, { useState } from "react";
+import useGenres, { Genre } from "../hooks/useGenres";
 import { FaSpinner } from "react-icons/fa";
-const GenreList = () => {
+import clsx from "clsx";
+
+interface Props {
+  selectGenre: (genre: Genre) => void;
+}
+
+const GenreList = ({ selectGenre }: Props) => {
+  const [selected, setSelected] = useState<Genre>();
   const { data: genres, error, isLoading } = useGenres();
+
+  const handeSelect = (genre: Genre) => {
+    selectGenre(genre);
+    setSelected(genre);
+  };
 
   if (error) return <p>{error}</p>;
   if (isLoading) return <FaSpinner className="animate-spin" />;
@@ -15,8 +27,11 @@ const GenreList = () => {
             return (
               <li key={genre.id}>
                 <a
-                  onClick={() => console.log(genre.id)}
-                  className="cursor-pointer hover:underline flex items-center gap-2 font-thin text-neutral-500 dark:text-neutral-200"
+                  onClick={() => handeSelect(genre)}
+                  className={clsx(
+                    "cursor-pointer hover:underline flex items-center gap-2 font-thin text-neutral-500 dark:text-neutral-200",
+                    genre.id === selected?.id && "underline"
+                  )}
                 >
                   <img
                     src={genre.image_background}

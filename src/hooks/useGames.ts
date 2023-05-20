@@ -1,4 +1,10 @@
+import { Axios, AxiosRequestConfig } from "axios";
 import useData from "./useData";
+import { Genre } from "./useGenres";
+
+export interface GameQuery {
+  genre: Genre | null;
+}
 
 export interface Platform {
   id: number;
@@ -14,6 +20,15 @@ export interface Game {
   parent_platforms: { platform: Platform }[];
 }
 
-const useGames = () => useData<Game>("/games");
+const useGames = (gameQuery: GameQuery) =>
+  useData<Game>(
+    "/games",
+    {
+      params: {
+        genres: gameQuery.genre?.id,
+      },
+    },
+    [gameQuery]
+  );
 
 export default useGames;
