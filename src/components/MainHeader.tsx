@@ -9,7 +9,7 @@ interface Props {
 const MainHeader = ({ selectSearch }: Props) => {
   const [query, setQuery] = useState("");
 
-  const handleQuery = (e) => {
+  const handleQuery = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     selectSearch(query);
   };

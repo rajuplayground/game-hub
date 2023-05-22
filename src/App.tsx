@@ -1,20 +1,33 @@
 import { useState } from "react";
-import { GameGrid, MainHeader, GenreList } from "./components";
+import { GameGrid, MainHeader, GenreList, GameFilters } from "./components";
 import { GameQuery } from "./hooks/useGames";
 import { Genre } from "./hooks/useGenres";
+import { Platform } from "./hooks/usePlatforms";
 
 function App() {
-  const [gameQuery, setGameQuery] = useState<GameQuery>({
-    genre: null,
-  });
+  const [gameQuery, setGameQuery] = useState<GameQuery>({});
 
-  const selectSearch = (query: string) => {
-    // setSearch(query);
+  const selectSearch = (searchText: string) => {
+    setGameQuery((q) => {
+      return { ...q, searchText };
+    });
   };
 
   const selectGenre = (genre: Genre) => {
     setGameQuery((q) => {
       return { ...q, genre };
+    });
+  };
+
+  const selectOrder = (sortOrder: string) => {
+    setGameQuery((q) => {
+      return { ...q, sortOrder };
+    });
+  };
+
+  const selectPlatform = (platform: Platform) => {
+    setGameQuery((q) => {
+      return { ...q, platform };
     });
   };
 
@@ -28,6 +41,10 @@ function App() {
         <div className="flex-1">
           <h1 className="font-bold text-5xl dark:text-white">Games</h1>
           <div className="h-[20px]"></div>
+          <GameFilters
+            selectOrder={selectOrder}
+            selectPlatform={selectPlatform}
+          />
           <div className="h-[20px]"></div>
           <div>
             <GameGrid gameQuery={gameQuery} />

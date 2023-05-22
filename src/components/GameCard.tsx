@@ -3,6 +3,7 @@ import { Game } from "../hooks/useGames";
 import PlatformIconList from "./PlatformIconList";
 import GameCritic from "./GameCritic";
 import getCroppedImageUrl from "../service/image-url";
+import placeholderImg from "../assets/no-image-placeholder.webp";
 
 interface Props {
   game: Game;
@@ -16,7 +17,11 @@ const GameCard = ({ game }: Props) => {
     >
       <img
         className="rounded-t-lg w-full"
-        src={getCroppedImageUrl(game.background_image)}
+        src={
+          game.background_image
+            ? getCroppedImageUrl(game.background_image)
+            : placeholderImg
+        }
         alt=""
       />
       <div className="p-5">
