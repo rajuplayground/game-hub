@@ -5,7 +5,7 @@ import { Genre } from "./hooks/useGenres";
 import { Platform } from "./hooks/usePlatforms";
 
 function App() {
-  const [gameQuery, setGameQuery] = useState<GameQuery>({});
+  const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
 
   const selectSearch = (searchText: string) => {
     setGameQuery((q) => {
