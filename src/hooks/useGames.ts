@@ -1,8 +1,8 @@
-import { Axios, AxiosRequestConfig } from "axios";
-import useData from "./useData";
-import { Genre } from "./useGenres";
-
-import { Platform } from "./usePlatforms";
+import { Genre } from "../service/GenreService";
+import { Platform } from "../service/PlatformService";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import gameService from "../service/GameService";
+import useGameQuery from "./useGameQuery";
 
 export interface GameQuery {
   genre: Genre | null;
@@ -11,26 +11,26 @@ export interface GameQuery {
   searchText: string;
 }
 
-export interface Game {
-  id: number;
-  name: string;
-  background_image: string;
-  metacritic: number;
-  parent_platforms: { platform: Platform }[];
-}
+const useGames = () => {
+  const { gameQuery } = useGameQuery();
 
-const useGames = (gameQuery: GameQuery) =>
-  useData<Game>(
-    "/games",
-    {
-      params: {
-        genres: gameQuery.genre?.id,
-        platforms: gameQuery.platform?.id,
-        ordering: gameQuery.sortOrder,
-        search: gameQuery.searchText,
-      },
+  return useInfiniteQuery({
+    queryKey: ["games", gameQuery],
+    queryFn: ({ pageParam = 1 }) => {
+      return gameService.getAll({
+        params: {
+          genres: gameQuery.genre?.id,
+          platforms: gameQuery.platform?.id,
+          ordering: gameQuery.sortOrder,
+          search: gameQuery.searchText,
+          page: pageParam,
+        },
+      });
     },
-    [gameQuery]
-  );
+    getNextPageParam: (lastPage, pages) => {
+      return lastPage.next ? pages.length + 1 : undefined;
+    },
+  });
+};
 
 export default useGames;

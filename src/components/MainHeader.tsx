@@ -1,17 +1,15 @@
 import { useState } from "react";
 import logo from "../assets/logo.webp";
 import ToggleTheme from "./ToggleTheme";
+import useGameQuery from "../hooks/useGameQuery";
 
-interface Props {
-  selectSearch: (query: string) => void;
-}
-
-const MainHeader = ({ selectSearch }: Props) => {
+const MainHeader = () => {
+  const { gameQuery, setSearch } = useGameQuery();
   const [query, setQuery] = useState("");
 
   const handleQuery = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    selectSearch(query);
+    setSearch(query);
   };
 
   return (
@@ -47,7 +45,6 @@ const MainHeader = ({ selectSearch }: Props) => {
               id="simple-search"
               className="block w-full p-2 pl-10 text-md text-neutral-800 rounded-full bg-neutral-200 placeholder-neutral-400 dark:placeholder-neutral-700 hover:bg-neutral-300 dark:hover:bg-neutral-800  transition focus:bg-white focus:ring-primary-500 focus:border-primary-500 dark:bg-neutral-900 dark:border-gray-600 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
               placeholder="Search games..."
-              required=""
               onChange={(e) => {
                 setQuery(e.target.value);
               }}

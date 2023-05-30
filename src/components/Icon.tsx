@@ -6,7 +6,7 @@ interface Props {
 }
 
 const Icon = ({ icon: RIcon }: Props) => {
-  return <RIcon className="text-gray-500" />;
+  return RIcon ? <RIcon className="text-gray-500" /> : null;
 };
 
 export default Icon;

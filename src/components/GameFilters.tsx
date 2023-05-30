@@ -1,18 +1,17 @@
 import { Fragment, useEffect, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { BsChevronDown } from "react-icons/bs";
-import usePlatforms, { Platform } from "../hooks/usePlatforms";
+import usePlatforms from "../hooks/usePlatforms";
+
 import _ from "lodash";
+import { Platform } from "../service/PlatformService";
+import useGameQuery from "../hooks/useGameQuery";
 
-interface Props {
-  selectPlatform: (platform: Platform) => void;
-  selectOrder: (order: string) => void;
-}
+const GameFilters = () => {
+  const { data, error: platformError, isLoading } = usePlatforms();
+  const { gameQuery, setPlatform, setSort } = useGameQuery();
 
-const GameFilters = ({ selectPlatform, selectOrder }: Props) => {
-  const { data: platforms, error: platformError, isLoading } = usePlatforms();
-  const [platform, setPlatform] = useState<Platform>();
-  const [order, setOrder] = useState("");
+  const platforms = data?.results;
 
   const orderby: string[] = [
     "name",
@@ -26,22 +25,20 @@ const GameFilters = ({ selectPlatform, selectOrder }: Props) => {
 
   const handlePlatform = (p: Platform) => {
     setPlatform(p);
-    selectPlatform(p);
   };
 
   const handleOrder = (order: string) => {
-    setOrder(order);
-    selectOrder(order);
+    setSort(order);
   };
 
   return (
     <div className="relative flex gap-5">
       <div className="flex gap-4">
-        {!platformError && (
+        {!platformError && platforms && (
           <Menu as="div" className="relative inline-block text-left">
             <div>
               <Menu.Button className="flex items-center rounded-md bg-neutral-200 dark:bg-neutral-800 px-4 py-2 text-md fon t-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-300 dark:hover:bg-neutral-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                {platform ? platform.name : "Platforms"}
+                {gameQuery.platform ? gameQuery.platform.name : "Platforms"}
                 <BsChevronDown
                   className="ml-2 -mr-1 h-5 w-5 text-neutral-800 dark:text-neutral-300"
                   aria-hidden="true"
@@ -70,8 +67,7 @@ const GameFilters = ({ selectPlatform, selectOrder }: Props) => {
                                 : "text-neutral-900 dark:text-neutral-300"
                             } w-full text-left rounded-md px-2 py-2 text-md`}
                             onClick={() => {
-                              selectPlatform(platform);
-                              setPlatform(platform);
+                              handlePlatform(platform);
                             }}
                           >
                             {platform.name}
@@ -88,7 +84,10 @@ const GameFilters = ({ selectPlatform, selectOrder }: Props) => {
         <Menu as="div" className="relative inline-block text-left">
           <div>
             <Menu.Button className="flex items-center rounded-md bg-neutral-200 dark:bg-neutral-800 px-4 py-2 text-md fon t-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-300 dark:hover:bg-neutral-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-              Order by: {order === "" ? "Relevance" : order}
+              Order by:{" "}
+              {gameQuery.sortOrder
+                ? _.capitalize(gameQuery.sortOrder)
+                : "Relevance"}
               <BsChevronDown
                 className="ml-2 -mr-1 h-5 w-5 text-neutral-800 dark:text-neutral-300"
                 aria-hidden="true"
@@ -117,8 +116,7 @@ const GameFilters = ({ selectPlatform, selectOrder }: Props) => {
                               : "text-neutral-900 dark:text-neutral-300"
                           } w-full text-left rounded-md px-2 py-2 text-md`}
                           onClick={() => {
-                            setOrder(order);
-                            selectOrder(order);
+                            handleOrder(order);
                           }}
                         >
                           {_.capitalize(order)}

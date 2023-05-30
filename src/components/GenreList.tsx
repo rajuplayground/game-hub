@@ -2,18 +2,16 @@ import React, { useState } from "react";
 import useGenres, { Genre } from "../hooks/useGenres";
 import { FaSpinner } from "react-icons/fa";
 import clsx from "clsx";
+import useGameQuery from "../hooks/useGameQuery";
 
-interface Props {
-  selectGenre: (genre: Genre) => void;
-}
+const GenreList = () => {
+  const { gameQuery, setGenre } = useGameQuery();
+  const { data, error, isLoading } = useGenres();
 
-const GenreList = ({ selectGenre }: Props) => {
-  const [selected, setSelected] = useState<Genre>();
-  const { data: genres, error, isLoading } = useGenres();
+  const genres = data?.results;
 
   const handeSelect = (genre: Genre) => {
-    selectGenre(genre);
-    setSelected(genre);
+    setGenre(genre);
   };
 
   if (error) return <p>{error}</p>;
@@ -30,7 +28,7 @@ const GenreList = ({ selectGenre }: Props) => {
                   onClick={() => handeSelect(genre)}
                   className={clsx(
                     "cursor-pointer hover:underline flex items-center gap-2 font-thin text-neutral-500 dark:text-neutral-200",
-                    genre.id === selected?.id && "underline"
+                    genre.id === gameQuery.genre?.id && "underline"
                   )}
                 >
                   <img
